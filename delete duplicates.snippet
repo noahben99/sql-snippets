@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<_locDefinition xmlns="urn:locstudio">
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">Title</_locTag>
+    <_locTag _loc="locData">Description</_locTag>
+    <_locTag _loc="locData">Author</_locTag>
+    <_locTag _loc="locData">ToolTip</_locTag>
+</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+	<Header>
+	<Title>Delete Duplicates</Title>
+        <Shortcut></Shortcut>
+	<Description>Delete Duplicates</Description>
+	<Author>steven.jacobs@cbre.com</Author>
+	<SnippetTypes>
+		<SnippetType>Expansion</SnippetType>
+	</SnippetTypes>
+	</Header>
+	<Snippet>
+		<Declarations>
+		</Declarations>
+		<Code Language="SQL">
+			<![CDATA[
+
+with cte as (
+select [fieldName1],
+ROW_NUMBER() OVER (PARTITION BY X.[fieldName2] ORDER BY X.[fieldName3] desc) AS RN
+from dbo.[tableName] x
+)
+delete from cte where rn > 1
+
+$end$]]>
+		</Code>
+	</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<_locDefinition xmlns="urn:locstudio">
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">Title</_locTag>
+    <_locTag _loc="locData">Description</_locTag>
+    <_locTag _loc="locData">Author</_locTag>
+    <_locTag _loc="locData">ToolTip</_locTag>
+</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+	<Header>
+	<Title>50 json blob</Title>
+        <Shortcut></Shortcut>
+	<Description>json blob</Description>
+	<Author>steven.jacobs@cbre.com</Author>
+	<SnippetTypes>
+		<SnippetType>Expansion</SnippetType>
+	</SnippetTypes>
+	</Header>
+	<Snippet>
+		<Declarations>
+		</Declarations>
+		<Code Language="SQL">
+			<![CDATA[
+
+declare @delimited_string nvarchar(255) = 'hello-world';
+declare @delimeter nvarchar(255) = '-';
+select 
+@delimited_string as delimited_string
+,@delimeter as delimiter
+,trim(json_value('["' + replace(@delimited_string,@delimeter,'","') + '"]','$[0]')) element_1
+,trim(json_value('["' + replace(@delimited_string,@delimeter,'","') + '"]','$[1]')) element_2
+,trim(json_value('["' + replace(@delimited_string,@delimeter,'","') + '"]','$[2]')) element_3
+,'["' + replace(@delimited_string,@delimeter,'","') + '"]' delimited_string_array
+
+
+$end$]]>
+		</Code>
+	</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

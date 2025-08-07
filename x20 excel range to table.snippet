@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<_locDefinition xmlns="urn:locstudio">
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">Title</_locTag>
+    <_locTag _loc="locData">Description</_locTag>
+    <_locTag _loc="locData">Author</_locTag>
+    <_locTag _loc="locData">ToolTip</_locTag>
+</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+	<Header>
+	<Title>20 Excel Range to Table</Title>
+	<Description>Excel Range to Table</Description>
+	<Author>steven.jacobs@cbre.com</Author>
+	<SnippetTypes>
+		<SnippetType>Expansion</SnippetType>
+	</SnippetTypes>
+	</Header>
+	<Snippet>
+		<Declarations>
+		</Declarations>
+		<Code Language="SQL">
+			<![CDATA[
+/*
+select value from string_split(REPLACE('PASTE_HERE',CHAR(13),''),CHAR(10))
+*/
+
+declare @text nvarchar (max) = '';
+declare @text2 nvarchar (max) = replace(@text,char(13),'');
+
+with cte as (
+	select 
+	ordinal
+	,json_value('["' + replace(value,char(9),'","') + '"]','$$[0]') col_01
+	,json_value('["' + replace(value,char(9),'","') + '"]','$$[1]') col_02
+	--,json_value('["' + replace(value,char(9),'","') + '"]','$$[2]') col_03
+	--,json_value('["' + replace(value,char(9),'","') + '"]','$$[3]') col_04
+	--,json_value('["' + replace(value,char(9),'","') + '"]','$$[4]') col_05
+	--,json_value('["' + replace(value,char(9),'","') + '"]','$$[5]') col_06
+	--,json_value('["' + replace(value,char(9),'","') + '"]','$$[6]') col_07
+	--,json_value('["' + replace(value,char(9),'","') + '"]','$$[7]') col_08
+	--,json_value('["' + replace(value,char(9),'","') + '"]','$$[8]') col_09
+	--,json_value('["' + replace(value,char(9),'","') + '"]','$$[9]') col_10
+	--,json_value('["' + replace(value,char(9),'","') + '"]','$$[10]') col_11
+	from string_split(@text2,char(10),1)
+	where value != ''
+)
+
+select
+col_01
+,col_02
+--,col_03
+--,col_04
+--,col_05
+--,col_06
+--,col_07
+--,col_08
+--,col_09
+--,col_10
+--,col_11
+from cte
+
+$end$]]>
+		</Code>
+	</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

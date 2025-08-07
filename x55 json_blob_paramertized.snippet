@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<_locDefinition xmlns="urn:locstudio">
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">Title</_locTag>
+    <_locTag _loc="locData">Description</_locTag>
+    <_locTag _loc="locData">Author</_locTag>
+    <_locTag _loc="locData">ToolTip</_locTag>
+</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+	<Header>
+	<Title>55 json blob param</Title>
+        <Shortcut></Shortcut>
+	<Description>json blob</Description>
+	<Author>steven.jacobs@cbre.com</Author>
+	<SnippetTypes>
+		<SnippetType>Expansion</SnippetType>
+	</SnippetTypes>
+	</Header>
+	<Snippet>
+		<Declarations>
+		</Declarations>
+		<Code Language="SQL">
+			<![CDATA[
+
+DECLARE @blobPath NVARCHAR(500) = 'doc-intelligence/columbusWater/group1_results/58489841200.pdf.ocr.json'
+DECLARE @ParmDefinition NVARCHAR(500) = N'@query_output_parameter NVARCHAR(MAX) OUTPUT';  
+DECLARE @j NVARCHAR(MAX);
+DECLARE @SQL nvarchar(MAX) = N'select @query_output_parameter = cast (bulkcolumn as NVARCHAR(MAX))  from openrowset( BULK ''' + @blobPath + ''', DATA_SOURCE = ''cbrejpmcpimoblobcontainers'', SINGLE_CLOB) as AzureBlob';
+
+EXEC    sp_executesql 
+        @SQL
+        ,@ParmDefinition
+        ,@query_output_parameter = @j OUTPUT;
+
+select      
+*
+from       openjson(@j)
+
+
+$end$]]>
+		</Code>
+	</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

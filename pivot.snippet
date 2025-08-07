@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<_locDefinition xmlns="urn:locstudio">
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">Title</_locTag>
+    <_locTag _loc="locData">Description</_locTag>
+    <_locTag _loc="locData">Author</_locTag>
+    <_locTag _loc="locData">ToolTip</_locTag>
+</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+	<Header>
+	<Title>Pivot Table</Title>
+        <Shortcut></Shortcut>
+	<Description>Pivot Table Code Block</Description>
+	<Author>steven.jacobs@cbre.com</Author>
+	<SnippetTypes>
+		<SnippetType>Expansion</SnippetType>
+	</SnippetTypes>
+	</Header>
+	<Snippet>
+		<Declarations>
+		</Declarations>
+		<Code Language="SQL">
+			<![CDATA[
+SELECT		[source_table_column]  
+			,[option_value_1]
+            ,[option_value_2]
+            ,[option_value_3]
+            ,[option_value_4]  
+			
+FROM
+    (SELECT		[source_table_column]
+                ,[pivot_column]
+    FROM		dbo.source_table
+    ) AS source_table_temp
+
+PIVOT
+(
+			COUNT([pivot_column])
+			FOR [pivot_column] IN (
+                [option_value_1]
+                ,[option_value_2]
+                ,[option_value_3]
+                ,[option_value_4]
+                )
+)			AS pivot_table
+
+$end$]]>
+		</Code>
+	</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
+
